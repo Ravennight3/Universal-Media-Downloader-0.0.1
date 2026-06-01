@@ -1,0 +1,46 @@
+appId: com.universalmediadownloader.app
+productName: Universal Media Downloader
+copyright: Ali Mohammed Copyright © 2026
+
+directories:
+  output: release
+  buildResources: build
+
+# Application code: only the electron-vite output + manifest go into the asar.
+# (Production node_modules — i.e. yauzl — are included automatically.)
+asar: true
+files:
+  - out/**/*
+  - package.json
+
+# The self-sufficient local ecosystem: a relocatable embeddable Python (with
+# yt-dlp), the engine script, and the native binaries are placed in resources/
+# (outside the asar) so they can be executed directly by child_process.
+extraResources:
+  - from: resources/python
+    to: python
+    filter:
+      - "**/*"
+      - "!**/__pycache__/**"
+      - "!**/*.pyc"
+  - from: src/main/engine.py
+    to: engine.py
+  - from: resources/bin
+    to: bin
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: ${productName}-${version}-Setup.${ext}
+
+# Single-file, per-user installer (installs to a writable location so the
+# bundled yt-dlp can still self-update and binaries can be refreshed).
+nsis:
+  oneClick: true
+  perMachine: false
+  allowToChangeInstallationDirectory: false
+  deleteAppDataOnUninstall: false
+  runAfterFinish: false
+  artifactName: ${productName}-${version}-Setup.${ext}

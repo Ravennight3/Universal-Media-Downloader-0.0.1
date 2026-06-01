@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (driven by `class="dark"` on <html>). Dark is default. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Inter for Latin, Cairo for Arabic, a system monospace for figures. */
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-arabic: "Cairo Variable", "Inter Variable", system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    /* Premium dark by default; light maps to a clean monochrome (zinc-50/900). */
+    @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+    overflow: hidden; /* app shell, not a document */
+    user-select: none; /* desktop-app feel; re-enable per element where needed */
+    font-family: var(--font-sans);
+  }
+
+  /* Arabic typography kicks in automatically when the shell flips to RTL. */
+  :where([dir="rtl"]) {
+    font-family: var(--font-arabic);
+  }
+
+  /* Thin, unobtrusive scrollbars to match the minimalist theme. */
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  *::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-zinc-300/70 dark:bg-zinc-700/60;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* Frameless window drag regions (custom title bar). */
+@utility app-drag {
+  -webkit-app-region: drag;
+}
+@utility app-no-drag {
+  -webkit-app-region: no-drag;
+}

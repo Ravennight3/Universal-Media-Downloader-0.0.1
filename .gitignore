@@ -1,0 +1,38 @@
+# Node.js / Electron
+node_modules/
+out/
+dist/
+build/
+release/
+.npm/
+*.tsbuildinfo
+
+# Python (Backend scripts & yt-dlp local tests)
+__pycache__/
+*.py[cod]
+*$py.class
+env/
+venv/
+.venv/
+
+# Environment Variables
+.env
+.env.local
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# Project Specific (Binaries)
+bin/ffmpeg*
+bin/aria2c*
+downloads/
+temp_processing/
+
+# Packaging — staged runtime (binaries + embeddable python) + installer output
+resources/bin/
+resources/python/
+release/
+
+# Claude Code local (user-specific) settings
+.claude/settings.local.json
