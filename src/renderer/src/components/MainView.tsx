@@ -7,7 +7,7 @@ import type { DownloadProgress, VideoMetadata } from '../../../preload/ipc-api'
 interface Props {
   url: string
   onChange: (value: string) => void
-  onSubmit: () => void
+  onSubmit: (override?: string) => void
   isFetching: boolean
   metaError: string | null
   metadata: VideoMetadata | null

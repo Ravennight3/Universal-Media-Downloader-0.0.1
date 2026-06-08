@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, clipboard } from 'electron'
 import type { Api } from './ipc-api'
 
 /**
@@ -48,7 +48,11 @@ const api: Api = {
 
   // Renderer → main (request/response): download location helpers.
   getDownloadsPath: () => ipcRenderer.invoke('get-downloads-path'),
-  chooseFolder: () => ipcRenderer.invoke('choose-folder')
+  chooseFolder: () => ipcRenderer.invoke('choose-folder'),
+
+  // Native clipboard read — Electron's own module is synchronous and prompt-free,
+  // unlike navigator.clipboard which can be blocked by renderer permissions.
+  readClipboard: () => clipboard.readText()
 }
 
 if (process.contextIsolated) {

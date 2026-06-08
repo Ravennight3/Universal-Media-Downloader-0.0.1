@@ -328,13 +328,19 @@ def run_download(url: str, fmt: str, out_dir: str | None) -> int:
     }
 
     if not selection.get("audio"):
-        # MP4-by-default for maximum compatibility: prefer H.264 video + M4A
-        # audio so the result plays everywhere, falling back to AV1/VP9 only when
-        # H.264 isn't offered (e.g. true 4K). This also yields TikTok's clean,
-        # watermark-free H.264 rendition. merge_output_format guarantees the .mp4
-        # container even if a non-mp4 stream is the only option.
+        # MP4 container by default, but RESOLUTION wins. "res" is listed first so
+        # yt-dlp always grabs the highest-resolution DASH stream; "ext:mp4:m4a"
+        # then prefers the MP4/M4A (H.264/AAC) rendition only to break ties at the
+        # SAME height (so 1080p still plays everywhere, and TikTok still yields its
+        # clean H.264 file).
+        #
+        # NOTE: a bare "vcodec:h264" here is a trap — format_sort fields outrank
+        # resolution, so it silently caps YouTube at 1080p (the highest H.264 it
+        # offers) and ignores the 1440p/2160p VP9/AV1 streams. That is exactly what
+        # made high-quality picks look soft/pixelated. merge_output_format still
+        # guarantees the final .mp4 container after the bestvideo+bestaudio merge.
         opts["merge_output_format"] = "mp4"
-        opts["format_sort"] = ["vcodec:h264", "ext:mp4:m4a"]
+        opts["format_sort"] = ["res", "ext:mp4:m4a"]
 
     if ffmpeg:
         opts["ffmpeg_location"] = os.path.dirname(ffmpeg)

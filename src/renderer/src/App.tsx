@@ -68,8 +68,11 @@ function App(): React.JSX.Element {
     { dependencies: [view, lang], scope: viewRef }
   )
 
-  const handleFetch = (): void => {
-    const trimmed = url.trim()
+  // `override` lets the URL field paste-and-fetch in one action: React state
+  // updates are async, so a freshly pasted value isn't in `url` yet — the
+  // caller passes it directly instead of waiting for the re-render.
+  const handleFetch = (override?: string): void => {
+    const trimmed = (override ?? url).trim()
     if (!trimmed || isFetching) return
     setMetadata(null)
     setMetaError(null)

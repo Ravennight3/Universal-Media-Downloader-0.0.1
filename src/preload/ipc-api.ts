@@ -76,4 +76,6 @@ export interface Api {
   getDownloadsPath: () => Promise<string>
   /** Open the native folder picker; resolves to the chosen path or null. */
   chooseFolder: () => Promise<string | null>
+  /** Read the system clipboard's plain text (empty string if none). */
+  readClipboard: () => string
 }

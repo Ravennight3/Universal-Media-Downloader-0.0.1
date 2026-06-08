@@ -52,6 +52,23 @@ export function Spinner(): React.JSX.Element {
   )
 }
 
+export function ClipboardIcon(props: IconProps): React.JSX.Element {
+  return (
+    <Stroke {...props}>
+      <rect x="8" y="2" width="8" height="4" rx="1" />
+      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    </Stroke>
+  )
+}
+
+export function ClearIcon(props: IconProps): React.JSX.Element {
+  return (
+    <Stroke {...props}>
+      <path d="M18 6 6 18M6 6l12 12" />
+    </Stroke>
+  )
+}
+
 export function MinimizeIcon(): React.JSX.Element {
   return (
     <svg width="10" height="10" viewBox="0 0 10 10">

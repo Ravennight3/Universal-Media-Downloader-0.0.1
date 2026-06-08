@@ -25,6 +25,7 @@ export interface Strings {
   historyTitle: string
   historyEmpty: string
   clear: string
+  paste: string
   settingsTitle: string
   language: string
   appearance: string
@@ -56,6 +57,7 @@ export const translations: Record<Lang, Strings> = {
     historyTitle: 'Downloads History',
     historyEmpty: 'No downloads yet',
     clear: 'Clear',
+    paste: 'Paste',
     settingsTitle: 'Settings',
     language: 'Language',
     appearance: 'Appearance',
@@ -85,6 +87,7 @@ export const translations: Record<Lang, Strings> = {
     historyTitle: 'سجل التنزيلات',
     historyEmpty: 'لا توجد تنزيلات بعد',
     clear: 'مسح',
+    paste: 'لصق',
     settingsTitle: 'الإعدادات',
     language: 'اللغة',
     appearance: 'المظهر',
